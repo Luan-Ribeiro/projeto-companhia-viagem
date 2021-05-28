@@ -25,7 +25,7 @@ public class Passagem {
                 System.out.println("Venda não autorizada para " + passageiro.getNome() + ". Menor de idade!");
             }
         } else {
-            System.out.println("Desculpe, o ônibus está cheio!");
+            System.out.println("Desculpe " + passageiro.getNome() + ", o ônibus está cheio!");
         }
         return false;
     }
