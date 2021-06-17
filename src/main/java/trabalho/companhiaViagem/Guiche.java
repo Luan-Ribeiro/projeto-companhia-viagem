@@ -1,21 +1,20 @@
 package trabalho.companhiaViagem;
 
-public class Passagem {
+public class Guiche {
     private double valor;
-    private double valorTotal;
 
-    public void vendaPassagem(Onibus onibus, Passageiro passageiro) {
+    public void vendaPassagem(Onibus onibus, Passageiro passageiro, GerenciaCompanhia g) {
         if (validaVendaPassagem(onibus, passageiro)) {
-            valorTotal += valor;
-            onibus.adicionaPassageiro(passageiro);
+            onibus.setRota("São Paulo - Rio de Janeiro " + g.getNumeroRota());
+            onibus.adicionaPassageiroSomaValor(passageiro, valor);
         }
     }
 
     public boolean validaVendaPassagem(Onibus onibus, Passageiro passageiro) {
-        if (onibus.passageiros.size() <= onibus.limiteAssentos) {
+        if (onibus.passageiros.size() < onibus.getLimiteAssentos()) {
             if (passageiro.getIdade() >= 18) {
                 boolean conferido = confereCpf(onibus, passageiro);
-                if (onibus.passageiros.size() <= onibus.limiteAssentos * 0.7) {
+                if (onibus.passageiros.size() <= onibus.getLimiteAssentos() * 0.7) {
                     this.valor = 10;
                 } else {
                     this.valor = 15;
@@ -25,7 +24,7 @@ public class Passagem {
                 System.out.println("Venda não autorizada para " + passageiro.getNome() + ". Menor de idade!");
             }
         } else {
-            System.out.println("Desculpe " + passageiro.getNome() + ", o ônibus está cheio!");
+            System.out.println("Venda não autorizada para " + passageiro.getNome() + ", o ônibus estava cheio!");
         }
         return false;
     }
@@ -38,9 +37,5 @@ public class Passagem {
             }
         }
         return true;
-    }
-
-    public void imprimirValorTotal() {
-        System.out.println("Valor total de passagens = " + valorTotal);
     }
 }
